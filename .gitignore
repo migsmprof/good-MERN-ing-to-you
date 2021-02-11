@@ -1,0 +1,8 @@
+# in client folder
+client/node_modules
+client/.vscode
+
+# in server folder
+server/node_modules
+
+*.code-workspace

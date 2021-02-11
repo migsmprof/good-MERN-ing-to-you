@@ -1,0 +1,19 @@
+{
+    "name": "nodejs-express-sequelizer-mysql2",
+    "version": "1.0.0",
+    "description": "Backend using Node.js Platform with Express Framework and MySQL Database through Sequelizer ORM",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "author": "Jose Miguel Marbella",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "mysql2": "^2.2.5",
+        "nodemon": "^2.0.7",
+        "sequelizer": "^1.1.4"
+    }
+}
