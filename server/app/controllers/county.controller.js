@@ -39,17 +39,20 @@ exports.findOne = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
-    var home_state = req.query.home_state
-    var condition = home_state ? {
-        home_state: {
-            [Op.eq]: home_state
-        }
-    } : null
+    var home_state = req.query.home_state * 1
+    var conditions = home_state ? {
+        where: {
+            home_state: {
+                [Op.eq]: home_state
+            }
+        },
+        attributes: {
+            exclude: ['home_state']
+        },
+    } : {}
 
     Counties
-        .findAll({
-            where: condition
-        })
+        .findAll(conditions)
         .then(data => {
             res.send(data)
         })

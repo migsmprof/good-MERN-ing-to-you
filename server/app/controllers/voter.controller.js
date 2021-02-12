@@ -41,19 +41,25 @@ exports.findOne = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
-    var home_county = req.query.home_county
-    var home_state = req.query.home_state
-    var condition = (home_state, home_county) => {
+    var home_county = req.query.home_county * 1
+    var home_state = req.query.home_state * 1
+    var conditions = (home_state, home_county) => {
         if (home_state) {
             return {
                 home_state: {
                     [Op.eq]: home_state
+                },
+                attributes: {
+                    exclude: ['home_state']
                 }
             }
         } else if (home_county) {
             return {
                 home_county: {
                     [Op.eq]: home_county
+                },
+                attributes: {
+                    exclude: ['home_county']
                 }
             }
         } else {
@@ -62,9 +68,7 @@ exports.findAll = (req, res) => {
     }
 
     Voters
-        .findAll({
-            where: condition(home_county, home_state)
-        })
+        .findAll(conditions(home_state, home_county))
         .then(data => {
             res.send(data)
         })
