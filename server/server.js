@@ -9,17 +9,18 @@ const db = require('./app/models')
 
 // Initialize Express Framework
 const app = express()
-app.get('/', (req, res) => res.send('Node.js == Express Framework == Sequelize ORM == MySQL == Heroku'))
 
 // Frontend Connection through CORS
 const corsOptions = {
-    origin: 'http://localhost:4001'
+    origin: 'http://localhost:4001',
+
 }
 app.use(cors(corsOptions))
 
 // Routing Helpers Setup
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.get('/', (req, res) => res.send('Node.js == Express Framework == Sequelize ORM == MySQL == Heroku'))
 
 // ORM and Database Synchronization
 db.sequelizeObject.sync()
