@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import {} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Dropdown from '../components/dropdown';
+// import Dropdown from './components/dropdown';
 
 class App extends Component {
     render() {
         return ( 
-			<Dropdown></Dropdown>
-        );
+			// <Dropdown></Dropdown>
+			<h1>Welcome!</h1>
+		);
     }
 }
 
