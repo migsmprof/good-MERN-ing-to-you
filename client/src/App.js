@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Component, Fragment } from 'react'
+import { Component, Fragment, useState } from 'react'
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 //DataServices
 import StateDataService from './services/states.service'
 import CountyDataService from './services/counties.service'
-
-//Components
-// import Dropdown from './components/dropdown'
 
 // Functions
 function extractValues(o, i) {
@@ -47,7 +44,8 @@ class App extends Component {
 		super(props)
 		this.state = {
 			allStates: [],
-			allCounties: []
+			allCounties: [],
+			voterState: null,
 		}
 		this.handleChooseStateChange = this.handleChooseStateChange.bind(this)
 		// this.handleSelectCountyChange = this.handleSelectCountyChange.bind(this)
@@ -79,7 +77,10 @@ class App extends Component {
 				let options = []
 				options = organizeValues(res.data, "County")
 				this.setState(
-					{ allCounties: options }, 
+					{ 
+						voterState: e.target.value,
+						allCounties: options 
+					}, 
 					() => renderToDropdown(
 						populateDropdown(this.state.allCounties), 
 						null, 
@@ -96,7 +97,6 @@ class App extends Component {
 			<div>
 				<select className="form-control" id="voter_state" aria-label="Choose State" onChange={this.handleChooseStateChange}></select>
 				<select className="form-control" id="voter_county" aria-label="Choose County">
-					<option defaultValue>Voter County</option>
 				</select>
 			</div>
 		)
