@@ -33,7 +33,5 @@ require('./app/routes/voter.routes')(app)
 // Server Configuration
 const PORT = server_config.PORT
 app.listen(PORT, () => {
-    console.log(`
-        Server is running in port number $ { PORT }.
-        `);
+    console.log(`Server is running in port number ${PORT}.`);
 });

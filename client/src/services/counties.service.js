@@ -9,7 +9,10 @@ class CountyDataService {
         return http.get(`/counties/${code}`)
     }
 
-    getAll() {
+    getAll(query) {
+		if (query) {
+			return http.get(`/counties?home_state=${query.home_state}`)
+		}
         return http.get('/counties')
     }
 

@@ -9,7 +9,13 @@ class VoterDataService {
         return http.get(`/voters/${id}`)
     }
 
-    getAll() {
+    getAll(query) {
+		if (query.home_state) {
+			return http.get(`/voters?home_county=${query.home_state}`)
+		}
+		if (query.home_county) {
+			return http.get(`/voters?home_county=${query.home_county}`)
+		}
         return http.get('/voters')
     }
 

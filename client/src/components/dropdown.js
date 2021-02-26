@@ -1,36 +1,52 @@
-import React from "react"
-import "bootstrap/dist/css/bootstrap.min.css"
+import { Component } from 'react'
 
-class Dropdown extends React.Component {
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+class Dropdown extends Component {
 	constructor(props) {
 		super(props)
+		this.handleSelectChange = this.handleSelectChange.bind(this)
 		this.state = {
-			value: null,
+			selected: 1,
 		}
-
-		this.handleSelect = this.handleSelect.bind(this)
 	}
 
-	handleSelect(e) {
-		this.setState(state => {
-			state.value = e.target.value
-		});
+	handleSelectChange(e) {
+		this.setState(e => ({
+			selected: e.target.value
+		}))
 	}
 
 	render() {
 		return (
-			<div>
-				<label htmlFor={ this.props.name }>{ this.props.label }</label>
-				<select className="form-select" id={ this.props.name } name={ this.props.name }>
-					{
-						Object.values(this.props.optionItems).forEach((item) => (
-							<option key = { Object.values(item)[0] } value = { Object.values(item)[0] }>{ Object.values(item)[1] }</option>
-						))
-					}
-				</select>
-			</div>
+			<select className="form-control" id={this.props.id} aria-label={this.props.label} onSelect={this.props.handleSelectChange}>
+				<option defaultValue>{this.props.label}</option>
+				{
+					this.props.choices.map((choice) => (
+						<option key={choice.value} value={choice.value}>{choice.label}</option>
+					))
+				}
+			</select>
 		)
 	}
 }
+// function Dropdown(props) {
+
+// 	handleSelectChange = (e) => {
+		
+// 	}
+
+// 	const choices = props.choices
+// 	const dropdownItems = choices.map((choice) => 
+// 		<option key={choice.value.toString()} value={choice.value}>{choice.label}</option>
+// 	)
+
+// 	return (
+// 		<select className={props.id} aria-label={props.label}>
+// 			<option defaultValue>{props.label}</option>
+// 			{dropdownItems}
+// 		</select>
+// 	)
+// }
 
 export default Dropdown
