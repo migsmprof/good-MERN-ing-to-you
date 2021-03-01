@@ -1,10 +1,10 @@
 //Styling
-import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.min.css'
 
 //React
 import { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Nav, NavItem, NavLink } from 'reactstrap'
+import { Navbar, Nav, NavLink, NavbarBrand } from 'reactstrap'
 
 //Views
 import AddVoter from './views/AddVoter'
@@ -14,16 +14,15 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<Nav>
-					<NavItem>
-						<NavLink href='/voters/add'>Register Voter</NavLink>
-					</NavItem>
-					<NavItem>
+				<Navbar color="dark" dark expand="lg">
+					<NavbarBrand href='/'>US Elections 2025</NavbarBrand>
+					<Nav className="mr-auto" navbar>
+						<NavLink href='/voters/add'>Register</NavLink>
 						<NavLink href='/voters/view'>View Voters</NavLink>
-					</NavItem>
-				</Nav>
+					</Nav>
+				</Navbar>
 			
-				<div className='container mt-2'>
+				<div className='mt-3'>
 					<Switch>
 						<Route exact path={['/', '/voters/add']} component={AddVoter} />
 						<Route exact path={'/voters/view'} component={ViewVoters} />

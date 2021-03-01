@@ -4,7 +4,7 @@ import {Component} from 'react'
 class ViewVoters extends Component {
 	render() {
 		return (
-			<p>Lorem Ipsum Sit Dolor Amet</p>
+			<p>To be continued...</p>
 		)
 	}
 }

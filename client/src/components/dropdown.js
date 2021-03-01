@@ -41,7 +41,14 @@ class Dropdown extends Component {
 	render() {
 		if (this.state.removeLabel) {
 			return (
-				<select className='form-select mb-3' id={this.props.id} name={this.props.id} aria-label={this.props.label} onChange={this.props.onChange}>
+				<select 
+					className = {this.props.className} 
+					id = {this.props.id} 
+					name = {this.props.id} 
+					aria-label = {this.props.label} 
+					onChange = {this.props.onChange} 
+					value = {this.state.options[0].value}
+				>
 					{
 						this.state.options.map(option => (
 							<option key={option.value} value={option.value}>{option.label}</option>
@@ -51,14 +58,27 @@ class Dropdown extends Component {
 			)
 		} else if (this.state.disabled) {
 			return (
-				<select className='form-select mb-3' id={this.props.id} name={this.props.id} aria-label={this.props.label} onChange={this.props.onChange} disabled>
-					<option key='' value=''>{this.props.label}</option>
+				<select 
+					className = {this.props.className} 
+					id = {this.props.id} 
+					name = {this.props.id} 
+					aria-label = {this.props.label} 
+					onChange = {this.props.onChange} 
+					disabled
+				>
+					<option key='' value='' defaultValue>{this.props.label}</option>
 				</select>
 			)
 		} else {
 			return (
-				<select className='form-select mb-3' id={this.props.id} name={this.props.id} aria-label={this.props.label} onChange={this.props.onChange} >
-					<option key='' value=''>{this.props.label}</option>
+				<select 
+					className = {this.props.className} 
+					id = {this.props.id} 
+					name = {this.props.id} 
+					aria-label = {this.props.label} 
+					onChange = {this.props.onChange}
+				>
+					<option key='' value='' defaultValue>{this.props.label}</option>
 					{
 						this.state.options.map(option => (
 							<option key={option.value} value={option.value}>{option.label}</option>
