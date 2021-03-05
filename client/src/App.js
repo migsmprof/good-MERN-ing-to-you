@@ -9,6 +9,7 @@ import { Navbar, Nav, NavLink, NavbarBrand } from 'reactstrap'
 //Views
 import AddVoter from './views/AddVoter'
 import ViewVoters from './views/ViewVoters'
+import AddState from './views/AddState'
 
 class App extends Component {
 	render() {
@@ -19,6 +20,7 @@ class App extends Component {
 					<Nav className="mr-auto" navbar>
 						<NavLink href='/voters/add'>Register</NavLink>
 						<NavLink href='/voters/view'>View Voters</NavLink>
+						<NavLink href='/states/add'>Add States</NavLink>
 					</Nav>
 				</Navbar>
 			
@@ -26,6 +28,7 @@ class App extends Component {
 					<Switch>
 						<Route exact path={['/', '/voters/add']} component={AddVoter} />
 						<Route exact path={'/voters/view'} component={ViewVoters} />
+						<Route exact path={'/states/add'} component={AddState} />
 					</Switch>
 				</div>
 			</div>

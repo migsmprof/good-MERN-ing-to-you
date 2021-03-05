@@ -1,4 +1,6 @@
 const db = require('../models')
+const Counties = db.counties
+const States = db.states
 const Voters = db.voters
 const Op = db.sequelizeModule.Op
 
@@ -63,7 +65,24 @@ exports.findAll = (req, res) => {
                 }
             }
         } else {
-            return {}
+            return {
+				attributes: {
+					exclude: ['home_state', 'home_county']
+				},
+				include: [
+					{
+						model: States,
+						required: true,
+					},
+					{
+						model: Counties,
+						required: true,
+						attributes: {
+							exclude: ['home_state']
+						}
+					}
+				]
+			}
         }
     }
 
