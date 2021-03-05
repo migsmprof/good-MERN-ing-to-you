@@ -51,7 +51,10 @@ class Dropdown extends Component {
 				>
 					{
 						this.state.options.map(option => (
-							<option key={option.value} value={option.value}>{option.label}</option>
+							<option 
+								key={option.value} 
+								value={option.value}
+							>{option.label}</option>
 						))
 					}
 				</select>
@@ -66,7 +69,10 @@ class Dropdown extends Component {
 					onChange = {this.props.onChange} 
 					disabled
 				>
-					<option key='' value='' defaultValue>{this.props.label}</option>
+					<option 
+						key='' 
+						value='' 
+					defaultValue>{this.props.label}</option>
 				</select>
 			)
 		} else {
@@ -78,10 +84,17 @@ class Dropdown extends Component {
 					aria-label = {this.props.label} 
 					onChange = {this.props.onChange}
 				>
-					<option key='' value='' defaultValue>{this.props.label}</option>
+					<option 
+						key='' 
+						value='' 
+						defaultValue
+					>{this.props.label}</option>
 					{
 						this.state.options.map(option => (
-							<option key={option.value} value={option.value}>{option.label}</option>
+							<option 
+								key={option.value} 
+								value={option.value}
+							>{option.label}</option>
 						))
 					}
 				</select>

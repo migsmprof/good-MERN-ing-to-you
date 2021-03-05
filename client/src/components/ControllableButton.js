@@ -22,19 +22,17 @@ class ControllableButton extends Component {
 	}
 
 	render() {
-		if (this.state.visible) {
-			return (
-				<Button color={this.props.color} block onClick={this.props.onClick} id={this.props.id}>
-					{this.props.children}
-				</Button>
-			)
-		} else {
-			return (
-				<Button color={this.props.color} block onClick={this.props.onClick} id={this.props.id} hidden>
-					{this.props.children}
-				</Button>
-			)
-		}
+		return (
+			<Button 
+				color={this.props.color} 
+				block 
+				onClick={this.props.onClick} 
+				id={this.props.id}
+				hidden={this.state.visible ? false : true}
+			>
+				{this.props.children}
+			</Button>
+		)
 	}
 }
 

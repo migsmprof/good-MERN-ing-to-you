@@ -6,9 +6,9 @@ import { Container } from 'reactstrap'
 
 import FormGenerator from '../components/FormGenerator'
 
-import StateDataService from '../services/states.service'
+import CountyDataService from '../services/counties.service'
 
-class AddState extends React.Component {
+class AddCounty extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -17,7 +17,7 @@ class AddState extends React.Component {
 		}
 		
 		this.componentIDs = {
-			title: 'Add States',
+			title: 'Add Counties',
 			formgroup: 'inputs_',
 			morerowsbtn: 'addrows',
 			lessrowsbtn: 'remrows',
@@ -28,8 +28,8 @@ class AddState extends React.Component {
 				colmd: '2',
 				type: 'number',
 				id: 'code_',
-				placeholder: 'State Code',
-				note: 'ANSI numeric (e.g. 07)'
+				placeholder: 'County Code',
+				note: 'ANSI numeric (e.g. 070020)'
 			},
 			{
 				colmd: '4',
@@ -44,10 +44,16 @@ class AddState extends React.Component {
 	}
 
 	handleSubmit() {
-		console.log()
-		StateDataService
+		const finalEntries = this.state.entries.map(entry => {
+			return { 
+				...entry, 
+				home_state: ''
+			}
+		})
+
+		CountyDataService
 			.create({
-				entries: this.state.entries
+				entries: finalEntries
 			})
 			.then(res => {
 				console.log(res)
@@ -55,6 +61,10 @@ class AddState extends React.Component {
 			.catch(err => {
 				console.log(err)
 			})
+	}
+
+	handleChange() {
+
 	}
 
 	render() {
@@ -65,11 +75,10 @@ class AddState extends React.Component {
 					max='10'  
 					componentIDs={this.componentIDs}
 					inputAttributes={this.inputAttributes}
-					handleSubmit={this.handleSubmit}
+					handleSubmit={this.handleSubmit.bind(this)}
 				/>
 			</Container>
 		)
 	}
 }
-
-export default AddState
+export default AddCounty

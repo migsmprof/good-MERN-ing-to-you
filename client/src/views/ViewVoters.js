@@ -38,8 +38,12 @@ class ViewVoters extends Component {
 						<td>{voter.id}</td>
 						<td>{voter.first_name} {voter.middle_name} {voter.last_name}</td>
 						<td>{voter.county.county_name} County, {voter.state.state_name}</td>
-						<td><Button color='info' block>Update</Button></td>
-						<td><Button color='danger' block>Delete</Button></td>
+						<td>
+							<Button color='info' block>Update</Button>
+						</td>
+						<td>
+							<Button color='danger' block>Delete</Button>
+						</td>
 					</tr>
 				))
 				ReactDOM.render(rows, document.getElementById('table'))
@@ -50,9 +54,10 @@ class ViewVoters extends Component {
 		return (
 			<Container>
 				<Row>
-					<Col md='3'><h3>Registered Voters</h3></Col>
-					<Col md='offset-6 3' id='loc'>
+					<Col md='3'>
+						<h3>Registered Voters</h3>
 					</Col>
+					<Col md='offset-6 3' id='loc'></Col>
 				</Row>
 				<Table>
 					<thead>

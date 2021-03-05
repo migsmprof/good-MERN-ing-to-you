@@ -56,8 +56,12 @@ class AddVoter extends Component {
 					{ 
 						allStates: options 
 					}, () => {	
-						this.selectStateRef.current.setOptions(this.state.allStates)
-						this.selectCountyRef.current.toDisable(true)
+						this.selectStateRef
+							.current
+							.setOptions(this.state.allStates)
+						this.selectCountyRef
+							.current
+							.toDisable(true)
 					}
 				)
 			})
@@ -79,9 +83,15 @@ class AddVoter extends Component {
 							voter_state: e.target.value,
 							allCounties: options 
 						}, () => {
-							this.selectCountyRef.current.removeLabelVisibility(this.state.allCounties.length > 0)
-							this.selectCountyRef.current.setOptions(this.state.allCounties)
-							this.selectCountyRef.current.toDisable(this.state.allCounties.length === 0)
+							this.selectCountyRef
+								.current
+								.removeLabelVisibility(this.state.allCounties.length > 0)
+							this.selectCountyRef
+								.current
+								.setOptions(this.state.allCounties)
+							this.selectCountyRef
+								.current
+								.toDisable(this.state.allCounties.length === 0)
 						})
 				})
 				.catch(err => {
@@ -97,9 +107,15 @@ class AddVoter extends Component {
 				{
 					allCounties: []
 				}, () => {
-					this.selectCountyRef.current.removeLabelVisibility(false)
-					this.selectCountyRef.current.setOptions(this.state.allCounties)
-					this.selectCountyRef.current.toDisable(true)
+					this.selectCountyRef
+						.current
+						.removeLabelVisibility(false)
+					this.selectCountyRef
+						.current
+						.setOptions(this.state.allCounties)
+					this.selectCountyRef
+						.current
+						.toDisable(true)
 				}
 			)
 		}
@@ -132,7 +148,8 @@ class AddVoter extends Component {
 		VoterDataService
 			.create(req)
 			.then(res => {
-				let fullName = res.data.first_name + " " + res.data.middle_name + " " + res.data.last_name
+				let fullName 
+					= res.data.first_name + " " + res.data.middle_name + " " + res.data.last_name
 				this.setState(() => {
 					return {
 						noticeColor: "success",
@@ -190,17 +207,36 @@ class AddVoter extends Component {
 						</Row>
 					</FormGroup>
 					<FormGroup>
-						<Input innerRef={this.inputLastNameRef} type="text" id="last_name" name="last_name" placeholder="Last Name" />
+						<Input 
+							innerRef={this.inputLastNameRef} 
+							type="text" 
+							id="last_name" 
+							name="last_name" 
+							placeholder="Last Name" />
 					</FormGroup>
 					<FormGroup>
-						<Input innerRef={this.inputFirstNameRef} type="text" id="first_name" name="first_name" placeholder="First Name" />
+						<Input 
+							innerRef={this.inputFirstNameRef} 
+							type="text" 
+							id="first_name" 
+							name="first_name" 
+							placeholder="First Name" />
 					</FormGroup>
 					<FormGroup>
-						<Input innerRef={this.inputMiddleNameRef} type="text" id="middle_name" name="middle_name" placeholder="Middle Name" />
+						<Input 
+							innerRef={this.inputMiddleNameRef} 
+							type="text" 
+							id="middle_name" 
+							name="middle_name" 
+							placeholder="Middle Name" />
 					</FormGroup>
 					<Row>
 						<Col md={{size: 3, offset: 9}}>
-							<Button color="primary" block onClick={this.handleClick}>Submit</Button>
+							<Button 
+								color="primary" 
+								block 
+								onClick={this.handleClick}
+							>Submit</Button>
 						</Col>
 					</Row>
 				</Form>
