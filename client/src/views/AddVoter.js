@@ -12,20 +12,6 @@ import VoterDataService from '../services/voters.service'
 //Components
 import Dropdown from '../components/Dropdown'
 
-// Functions
-function extractValues(o, i) {
-	let a = Object.values(o)
-	return a[i]
-}
-function organizeValues(d, e) {
-	return d.map((datum) => (
-		{
-			value: extractValues(datum, 0),
-			label: extractValues(datum, 1) + `${(e) ? (' ' + e) : ''}`
-		}
-	))
-}
-
 class AddVoter extends Component {
 	constructor(props) {
 		super(props)
@@ -51,17 +37,16 @@ class AddVoter extends Component {
 		StateDataService
 			.getAll()
 			.then(res => {
-				let options = organizeValues(res.data)
 				this.setState(
 					{ 
-						allStates: options 
+						allStates: res.data 
 					}, () => {	
 						this.selectStateRef
 							.current
-							.setOptions(this.state.allStates)
+							.setOptions(this.state.allStates, "Choose State")
 						this.selectCountyRef
 							.current
-							.toDisable(true)
+							.toDisable(false)
 					}
 				)
 			})
@@ -77,21 +62,20 @@ class AddVoter extends Component {
 					home_state: e.target.value 
 				})
 				.then(res => {
-					let options = organizeValues(res.data, "County")
 					this.setState(
 						{ 
 							voter_state: e.target.value,
-							allCounties: options 
+							allCounties: res.data
 						}, () => {
 							this.selectCountyRef
 								.current
 								.removeLabelVisibility(this.state.allCounties.length > 0)
 							this.selectCountyRef
 								.current
-								.setOptions(this.state.allCounties)
+								.setOptions(this.state.allCounties, "County")
 							this.selectCountyRef
 								.current
-								.toDisable(this.state.allCounties.length === 0)
+								.toDisable(this.state.allCounties.length !== 0)
 						})
 				})
 				.catch(err => {
@@ -115,7 +99,7 @@ class AddVoter extends Component {
 						.setOptions(this.state.allCounties)
 					this.selectCountyRef
 						.current
-						.toDisable(true)
+						.toDisable(false)
 				}
 			)
 		}

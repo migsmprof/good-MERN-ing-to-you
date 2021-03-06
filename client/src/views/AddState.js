@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Container } from 'reactstrap'
 
-import FormGenerator from '../components/FormGenerator'
+import DynamicForm from '../components/DynamicForm'
 
 import StateDataService from '../services/states.service'
 
@@ -16,56 +16,72 @@ class AddState extends React.Component {
 			entries: [],
 		}
 		
-		this.componentIDs = {
-			title: 'Add States',
-			formgroup: 'inputs_',
-			morerowsbtn: 'addrows',
-			lessrowsbtn: 'remrows',
+		this.componentattrs = {
+			title: {
+				text: 'Add States',
+				colmd: '2',
+			},
+			morerowsbtn: {
+				id: 'addrows',
+				colmd: '1',
+			},
+			lessrowsbtn: {
+				id: 'remrows',
+				colmd: '1 offset-3',
+			},
+			submitbtn: {
+				colmd: '2 offset-5',
+			}
 		}
 
-		this.inputAttributes = [
+		this.inputattrs = [
 			{
 				colmd: '2',
 				type: 'number',
-				id: 'code_',
+				field: 'code',
 				placeholder: 'State Code',
 				note: 'ANSI numeric (e.g. 07)'
 			},
 			{
-				colmd: '4',
+				colmd: '5',
 				type: 'text',
-				id: 'name_',
+				field: 'state_name',
 				placeholder: 'State Name',
 				note: 'Capitalized.'
 			}
 		]
-
-		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	handleSubmit() {
-		console.log()
+	handleSubmit(e, data) {
+		e.preventDefault()
+		const final = data.map(datum => {
+			return {
+				code: datum[`${Object.keys(datum).filter(key => key.includes('code'))}`],
+				state_name: datum[`${Object.keys(datum).filter(key => key.includes('state_name'))}`]
+			}
+		})
 		StateDataService
 			.create({
-				entries: this.state.entries
+				entries: final
 			})
-			.then(res => {
-				console.log(res)
-			})
-			.catch(err => {
-				console.log(err)
-			})
+			.then(res =>
+				console.log('Successfully created! Status Code ' + res.status)	
+			)
+			.catch(err =>
+				console.log(err.message)	
+			)
 	}
+
 
 	render() {
 		return (
 			<Container>
-				<FormGenerator 
-					min='4' 
-					max='10'  
-					componentIDs={this.componentIDs}
-					inputAttributes={this.inputAttributes}
-					handleSubmit={this.handleSubmit}
+				<DynamicForm 
+					min ='4' 
+					max = '10'  
+					componentattrs = {this.componentattrs}
+					inputattrs = {this.inputattrs}
+					onSubmit = {(e, finalset) => this.handleSubmit(e, finalset)}
 				/>
 			</Container>
 		)

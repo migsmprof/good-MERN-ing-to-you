@@ -2,23 +2,45 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { Component } from 'react'
 
+// Functions
+function extractValues(o, i) {
+	let a = Object.values(o)
+	return a[i]
+}
+function organizeValues(d, e) {
+	return d.map((datum) => (
+		{
+			value: extractValues(datum, 0),
+			label: extractValues(datum, 1) + `${(e) ? (' ' + e) : ''}`
+		}
+	))
+}
+
 class Dropdown extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			options: [],
 			removeLabel: false,
-			disabled: false
+			disabled: false,
+			label: '',
 		}
 		this.setOptions = this.setOptions.bind(this)
 		this.removeLabelVisibility = this.removeLabelVisibility.bind(this)
 	}
 
-	setOptions(entries) {
+	setOptions(entries, label) {
+		let options = organizeValues(entries)
 		this.setState(() => {
 			return {
-				options: entries
+				options: options
 			}
+		}, () => {
+			this.setState(() => {
+				return {
+					label: label
+				}
+			})
 		})
 	}
 
@@ -33,7 +55,7 @@ class Dropdown extends Component {
 	toDisable(bool) {
 		this.setState(() => {
 			return {
-				disabled: bool
+				disabled: !bool
 			}
 		})
 	}
@@ -45,7 +67,7 @@ class Dropdown extends Component {
 					className = {this.props.className} 
 					id = {this.props.id} 
 					name = {this.props.id} 
-					aria-label = {this.props.label} 
+					aria-label = {this.state.label} 
 					onChange = {this.props.onChange} 
 					value = {this.state.options[0].value}
 				>
@@ -65,14 +87,14 @@ class Dropdown extends Component {
 					className = {this.props.className} 
 					id = {this.props.id} 
 					name = {this.props.id} 
-					aria-label = {this.props.label} 
+					aria-label = {this.state.label} 
 					onChange = {this.props.onChange} 
 					disabled
 				>
 					<option 
 						key='' 
 						value='' 
-					defaultValue>{this.props.label}</option>
+					defaultValue>{this.state.label}</option>
 				</select>
 			)
 		} else {
@@ -81,14 +103,14 @@ class Dropdown extends Component {
 					className = {this.props.className} 
 					id = {this.props.id} 
 					name = {this.props.id} 
-					aria-label = {this.props.label} 
+					aria-label = {this.state.label} 
 					onChange = {this.props.onChange}
 				>
 					<option 
 						key='' 
 						value='' 
 						defaultValue
-					>{this.props.label}</option>
+					>{this.state.label}</option>
 					{
 						this.state.options.map(option => (
 							<option 
