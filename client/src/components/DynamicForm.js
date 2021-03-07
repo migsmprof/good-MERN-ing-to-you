@@ -12,13 +12,19 @@ export default class DynamicForm extends React.Component {
 		this.min = this.props.min * 1
 		this.max = this.props.max * 1
 		this.componentattrs = this.props.componentattrs
-
+		
 		this.state = {
 			counter: this.min,
-			items: [],
 			entries: [],
+			items: [ ...new Array(this.max)].map((n, i) => {
+				return {
+					isHidden: ((i + 1) > (this.min)) ? true : false,
+					noteIsHidden: (i + 1 === 1) ? false : true
+				}
+			})
 		}
-
+		
+		
 		this.formRef = React.createRef()
 		this.moreRowsBtnRef = React.createRef()
 		this.lessRowsBtnRef = React.createRef()
@@ -48,31 +54,17 @@ export default class DynamicForm extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState(() => {
-			let inputSetup = []
-			for (let i = 1; i <= this.max; i++) {
-				inputSetup.push(
-					{
-						isHidden: (i > this.state.counter) ? true : false,
-						noteIsHidden: (i === 1) ? false : true
-					}
-				)
-			}
-			const items = inputSetup
-			return {
-				items,
-			}
-		}, () => {
-			this.moreRowsBtnRef.current.setVisibility(true)
-			this.lessRowsBtnRef.current.setVisibility(false)
-		})
+		this.moreRowsBtnRef.current.setVisibility(true)
+		this.lessRowsBtnRef.current.setVisibility(false)
 	}
 
 	moreRows(e) {
 		e.preventDefault()
+		// Increments state variable "counter"
 		this.setState(
 			{ counter: this.state.counter + 1 }, 
 			() => {
+				// Updates state variable "items"
 				this.setState(() => {
 					let inputSetup = []
 					for (let i = 1; i <= this.max; i++) {
@@ -89,6 +81,7 @@ export default class DynamicForm extends React.Component {
 						items,
 					}
 				}, () => {
+					// Toggles visibility of both buttons depending on the counter variable
 					this.moreRowsBtnRef
 						.current
 						.setVisibility(
@@ -134,6 +127,11 @@ export default class DynamicForm extends React.Component {
 					items,
 				}
 			}, () => {
+				let hiddenInputs = document.getElementsByClassName('inputsToHide')
+				for (let i = 0; i < hiddenInputs.length; i++) {
+					hiddenInputs.namedItem(hiddenInputs.item(i).id).value = ""
+				}
+
 				this.lessRowsBtnRef
 					.current
 					.setVisibility(
@@ -151,6 +149,7 @@ export default class DynamicForm extends React.Component {
 	}
 
 	controlFormGroups(e) {
+		e.preventDefault()
 		if (e.target.id === this.componentattrs.morerowsbtn.id) {
 			this.moreRows(e)
 		} else if (e.target.id === this.componentattrs.lessrowsbtn.id) {
@@ -194,12 +193,13 @@ export default class DynamicForm extends React.Component {
 					this.state.items.map((item, i) => (
 						<FormGroupGenerator
 							inputattrs = {this.props.inputattrs}
-							key={`formgroup-${i}`}
-							keyname = {item.key}
+							key = {`formgroup-${i + 1}`}
+							keyname = {`formgroup-${i + 1}`}
 							index = {i + 1 + ''}
 							hidden = {item.isHidden}
 							notehidden = {item.noteIsHidden}
 							onChange = {(newset) => this.getFormGroupValues(newset)}
+							className = {(i + 1 > this.min) ? 'inputsToHide' : ''}
 						/> 
 					))
 				}

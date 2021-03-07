@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import React from 'react'
-
 import {FormGroup, Col, Input, FormText } from 'reactstrap'
 
 export default class FormGroupGenerator extends React.Component {
@@ -63,28 +62,29 @@ export default class FormGroupGenerator extends React.Component {
 				onChange = {this.handleInputChange}
 				row
 			>
-				{ 
-					this.props.inputattrs.map(attr => (
-						<Col 
-							md = {attr.colmd}
-							key = {`${this.props.keyname}-${attr.field}`}
-						>
-							<Input 
-								type = {attr.type}
-								idfield = {`${attr.field}-${this.props.index}`} 
-								name = {`${attr.field}-${this.props.index}`}
-								placeholder = {attr.placeholder}
-								min = {attr.type === 'number' ? '1' : ''}
-								hidden = {this.props.hidden}
-							/>
-							{
-								(this.props.notehidden) 
-									? '' 
-									: <FormText color='muted'>{attr.note}</FormText>
-							}
-						</Col>
-					))
-				}
+			{
+				this.props.inputattrs.map(attr => (
+					<Col 
+						md = {attr.colmd}
+						key = {`${this.props.keyname}-${attr.field}`}
+					>
+						<Input 
+							type = {attr.type}
+							id = {`${attr.field}-${this.props.index}`} 
+							name = {`${attr.field}-${this.props.index}`}
+							placeholder = {attr.placeholder}
+							min = {attr.type === 'number' ? '1' : ''}
+							hidden = {this.props.hidden}
+							className = {this.props.className}
+						/>
+						{
+							(this.props.notehidden) 
+								? '' 
+								: <FormText color='muted'>{attr.note}</FormText>
+						}
+					</Col>
+				))
+			}
 			</FormGroup>
 		)
 	}
