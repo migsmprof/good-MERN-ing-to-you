@@ -46,7 +46,7 @@ class AddCounty extends React.Component {
 				type: 'number',
 				field: 'code',
 				placeholder: 'County Code',
-				note: 'ANSI numeric (e.g. 07)'
+				note: 'ANSI numeric (e.g. 07001)'
 			},
 			{
 				colmd: '5',
@@ -59,6 +59,22 @@ class AddCounty extends React.Component {
 
 		this.toggle = this.toggle.bind(this)
 		this.handleChooseStateChange = this.handleChooseStateChange.bind(this)
+	}
+
+	handleChooseStateChange(e) {
+		this.setState(() => {
+			return {
+				home_state: e.target.value
+			}
+		}, () => {
+			if (this.state.home_state) {
+				let countyCodeInputs = document.getElementsByClassName('code_field')
+
+				for (let i = 0; i < countyCodeInputs.length; i++) {
+					countyCodeInputs.item(i).value = this.state.home_state
+				}
+			}
+		})
 	}
 
 	handleSubmit(e, data) {
@@ -82,14 +98,6 @@ class AddCounty extends React.Component {
 			)
 	}
 
-	handleChooseStateChange(e) {
-		this.setState(() => {
-			return {
-				home_state: e.target.value
-			}
-		})
-	}
-
 	componentDidMount() {
 		StateDataService
 			.getAll()
@@ -100,7 +108,7 @@ class AddCounty extends React.Component {
 					}, () => {	
 						this.selectStateRef
 							.current
-							.setOptions(this.state.allStates, "Choose State")
+							.setOptions(this.state.allStates)
 					}
 				)
 			})

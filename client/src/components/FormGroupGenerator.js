@@ -75,7 +75,7 @@ export default class FormGroupGenerator extends React.Component {
 							placeholder = {attr.placeholder}
 							min = {attr.type === 'number' ? '1' : ''}
 							hidden = {this.props.hidden}
-							className = {this.props.className}
+							className = {`${attr.field}_field ${this.props.className}`}
 						/>
 						{
 							(this.props.notehidden) 

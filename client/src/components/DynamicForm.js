@@ -129,7 +129,9 @@ export default class DynamicForm extends React.Component {
 			}, () => {
 				let hiddenInputs = document.getElementsByClassName('inputsToHide')
 				for (let i = 0; i < hiddenInputs.length; i++) {
-					hiddenInputs.namedItem(hiddenInputs.item(i).id).value = ""
+					let inputID = hiddenInputs.item(i).id
+					if (inputID.includes(`-${this.state.counter + 1}`))
+						hiddenInputs.namedItem(inputID).value = ""
 				}
 
 				this.lessRowsBtnRef
