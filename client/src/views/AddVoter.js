@@ -43,7 +43,7 @@ class AddVoter extends Component {
 					}, () => {	
 						this.selectStateRef
 							.current
-							.setOptions(this.state.allStates, "Choose State")
+							.setOptions(this.state.allStates)
 						this.selectCountyRef
 							.current
 							.toDisable(false)
@@ -75,7 +75,7 @@ class AddVoter extends Component {
 								.setOptions(this.state.allCounties, "County")
 							this.selectCountyRef
 								.current
-								.toDisable(this.state.allCounties.length !== 0)
+								.toDisable(this.state.allCounties.length > 0)
 						})
 				})
 				.catch(err => {
@@ -106,19 +106,11 @@ class AddVoter extends Component {
 	}
 
 	handleChooseCountyChange(e) {
-		if(e.target.value) {
-			this.setState(() => {
-				return {
-					voter_county: e.target.value
-				}
-			})
-		} else {
-			this.setState(() => {
-				return {
-					voter_county: null
-				}
-			})
-		}
+		this.setState(() => {
+			return {
+				voter_county: e.target.value
+			}
+		})
 	}
 
 	handleClick() {
@@ -158,7 +150,6 @@ class AddVoter extends Component {
 	changeNoticeMessage(message) {
 		return message
 	}
-
 
     render() {
 		return (

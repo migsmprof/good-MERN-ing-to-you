@@ -23,14 +23,13 @@ class Dropdown extends Component {
 			options: [],
 			removeLabel: false,
 			disabled: false,
-			label: '',
+			controlledValue: '',
 		}
 		this.setOptions = this.setOptions.bind(this)
-		this.removeLabelVisibility = this.removeLabelVisibility.bind(this)
 	}
 
 	setOptions(entries, label) {
-		let options = organizeValues(entries)
+		let options = organizeValues(entries, label)
 		this.setState(() => {
 			return {
 				options: options
@@ -60,68 +59,45 @@ class Dropdown extends Component {
 		})
 	}
 
+	setControlledValue(value) {
+		this.setState(() => {
+			return {
+				controlledValue: value
+			}
+		})
+	}
+
 	render() {
-		if (this.state.removeLabel) {
-			return (
-				<select 
-					className = {this.props.className} 
-					id = {this.props.id} 
-					name = {this.props.id} 
-					aria-label = {this.state.label} 
-					onChange = {this.props.onChange} 
-					value = {this.state.options[0].value}
-				>
-					{
-						this.state.options.map(option => (
+		return (
+			<select 
+				className = {this.props.className} 
+				id = {this.props.id} 
+				name = {this.props.id} 
+				aria-label = {this.props.label} 
+				onChange = {this.props.onChange}
+				disabled = {this.state.disabled ? true : false}
+			>
+				{
+					!this.state.removeLabel
+						&& (
+							<option 
+								key='' 
+								value='' 
+								defaultValue
+							>{this.props.label}</option>
+						)
+				}
+				{
+					!this.state.disabled 
+						&& this.state.options.map(option => (
 							<option 
 								key={option.value} 
 								value={option.value}
 							>{option.label}</option>
 						))
-					}
-				</select>
-			)
-		} else if (this.state.disabled) {
-			return (
-				<select 
-					className = {this.props.className} 
-					id = {this.props.id} 
-					name = {this.props.id} 
-					aria-label = {this.state.label} 
-					onChange = {this.props.onChange} 
-					disabled
-				>
-					<option 
-						key='' 
-						value='' 
-					defaultValue>{this.state.label}</option>
-				</select>
-			)
-		} else {
-			return (
-				<select 
-					className = {this.props.className} 
-					id = {this.props.id} 
-					name = {this.props.id} 
-					aria-label = {this.state.label} 
-					onChange = {this.props.onChange}
-				>
-					<option 
-						key='' 
-						value='' 
-						defaultValue
-					>{this.state.label}</option>
-					{
-						this.state.options.map(option => (
-							<option 
-								key={option.value} 
-								value={option.value}
-							>{option.label}</option>
-						))
-					}
-				</select>
-			)
-		}
+				}
+			</select>
+		)
 	}
 }
 
