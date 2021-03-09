@@ -46,7 +46,7 @@ class AddVoter extends Component {
 							.setOptions(this.state.allStates)
 						this.selectCountyRef
 							.current
-							.toDisable(false)
+							.fromDisable(false)
 					}
 				)
 			})
@@ -75,7 +75,7 @@ class AddVoter extends Component {
 								.setOptions(this.state.allCounties, "County")
 							this.selectCountyRef
 								.current
-								.toDisable(this.state.allCounties.length > 0)
+								.fromDisable(this.state.allCounties.length > 0)
 						})
 				})
 				.catch(err => {
@@ -99,7 +99,7 @@ class AddVoter extends Component {
 						.setOptions(this.state.allCounties)
 					this.selectCountyRef
 						.current
-						.toDisable(false)
+						.fromDisable(false)
 				}
 			)
 		}

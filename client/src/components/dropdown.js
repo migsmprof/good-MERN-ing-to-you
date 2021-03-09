@@ -26,20 +26,16 @@ class Dropdown extends Component {
 			controlledValue: '',
 		}
 		this.setOptions = this.setOptions.bind(this)
+		this.fillOptions = this.fillOptions.bind(this)
+		this.changeOptions = this.changeOptions.bind(this)
 	}
 
 	setOptions(entries, label) {
-		let options = organizeValues(entries, label)
+		const options = organizeValues(entries, label)
 		this.setState(() => {
 			return {
-				options: options
+				options,
 			}
-		}, () => {
-			this.setState(() => {
-				return {
-					label: label
-				}
-			})
 		})
 	}
 
@@ -51,7 +47,7 @@ class Dropdown extends Component {
 		})
 	}
 
-	toDisable(bool) {
+	fromDisable(bool) {
 		this.setState(() => {
 			return {
 				disabled: !bool
@@ -67,6 +63,25 @@ class Dropdown extends Component {
 		})
 	}
 
+	fillOptions(fn) {
+		if (fn()) {	
+			this.setOptions(fn().entries, fn().label)
+		} else {
+			this.removeLabelVisibility(false)
+			this.fromDisable(false)
+		}
+	}
+
+	changeOptions(e) {
+		(this.props.fillEffect && this.props.fillEffect(e))
+	}
+
+	componentDidMount() {
+		if (this.props.fillOptions) {
+			this.fillOptions(this.props.fillOptions)
+		}
+	}
+
 	render() {
 		return (
 			<select 
@@ -74,7 +89,7 @@ class Dropdown extends Component {
 				id = {this.props.id} 
 				name = {this.props.id} 
 				aria-label = {this.props.label} 
-				onChange = {this.props.onChange}
+				onChange = {this.props.fillOptions ? this.changeOptions : this.props.onChange}
 				disabled = {this.state.disabled ? true : false}
 			>
 				{
